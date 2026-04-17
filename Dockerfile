@@ -32,9 +32,14 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && apt-get update && apt-get install -y --no-install-recommends gh \
     && rm -rf /var/lib/apt/lists/*
 
-# Bitwarden CLI
-RUN curl -fsSL "https://github.com/bitwarden/clients/releases/latest/download/bw-linux-amd64.zip" \
-    -o /tmp/bw.zip \
+# Bitwarden CLI — latest release from bitwarden/clients (tag cli-v*)
+RUN BW_VERSION=$(curl -fsSL "https://api.github.com/repos/bitwarden/clients/releases" \
+      | grep '"tag_name"' \
+      | grep '"cli-v' \
+      | head -1 \
+      | sed 's/.*"cli-v\([^"]*\)".*/\1/') \
+    && curl -fsSL "https://github.com/bitwarden/clients/releases/download/cli-v${BW_VERSION}/bw-linux-${BW_VERSION}.zip" \
+      -o /tmp/bw.zip \
     && unzip /tmp/bw.zip -d /usr/local/bin/ \
     && chmod +x /usr/local/bin/bw \
     && rm /tmp/bw.zip
