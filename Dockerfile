@@ -32,7 +32,17 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && apt-get update && apt-get install -y --no-install-recommends gh \
     && rm -rf /var/lib/apt/lists/*
 
+# Bitwarden CLI
+RUN curl -fsSL "https://github.com/bitwarden/clients/releases/latest/download/bw-linux-amd64.zip" \
+    -o /tmp/bw.zip \
+    && unzip /tmp/bw.zip -d /usr/local/bin/ \
+    && chmod +x /usr/local/bin/bw \
+    && rm /tmp/bw.zip
+
 # OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash
 
-ENTRYPOINT ["opencode"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
