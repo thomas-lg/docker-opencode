@@ -31,8 +31,14 @@ fi
 GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/null || true)
 if [ -n "$GITHUB_TOKEN" ]; then
   export GITHUB_TOKEN
-  # Configure git to use token for github.com HTTPS remotes
-  git config --global credential.helper '!f() { echo "username=x-token"; echo "password=$GITHUB_TOKEN"; }; f'
+  # Write a credential helper script so git can use the token without URL embedding
+  cat > /usr/local/bin/git-credential-vaultwarden <<EOF
+#!/bin/sh
+echo "username=x-token"
+echo "password=$GITHUB_TOKEN"
+EOF
+  chmod +x /usr/local/bin/git-credential-vaultwarden
+  git config --global credential.https://github.com.helper vaultwarden
   # Authenticate gh CLI
   echo "$GITHUB_TOKEN" | gh auth login --with-token 2>/dev/null || true
 fi
