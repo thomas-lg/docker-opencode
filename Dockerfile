@@ -12,6 +12,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ripgrep \
     yq \
     unzip \
+    procps \
+    iproute2 \
+    iputils-ping \
+    rsync \
+    dnsutils \
     && rm -rf /var/lib/apt/lists/*
 
 # Docker CLI officiel
