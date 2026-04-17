@@ -27,4 +27,14 @@ if [ ! -f "$SESSION_FILE" ]; then
   echo "$BW_SESSION" > "$SESSION_FILE"
 fi
 
+# Fetch GitHub token from Vaultwarden and configure git/gh
+GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/null || true)
+if [ -n "$GITHUB_TOKEN" ]; then
+  export GITHUB_TOKEN
+  # Configure git to use token for github.com HTTPS remotes
+  git config --global credential.helper '!f() { echo "username=x-token"; echo "password=$GITHUB_TOKEN"; }; f'
+  # Authenticate gh CLI
+  echo "$GITHUB_TOKEN" | gh auth login --with-token 2>/dev/null || true
+fi
+
 exec opencode "$@"
