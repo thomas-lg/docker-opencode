@@ -7,6 +7,7 @@ ENV PATH="/root/.opencode/bin:${PATH}"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
+    wget \
     jq \
     git \
     ripgrep \

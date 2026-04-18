@@ -76,7 +76,7 @@ fi
 # ── GitHub token ──────────────────────────────────────────────────────────────
 
 log "Fetching GitHub token from Vaultwarden..."
-GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/null || true)
+GITHUB_TOKEN=$(bw get password "github_token" --session "$BW_SESSION" 2>/dev/null || true)
 
 if [ -n "$GITHUB_TOKEN" ]; then
   log "GitHub token fetched, configuring git and gh CLI..."
