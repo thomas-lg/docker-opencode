@@ -88,9 +88,7 @@ echo "password=$GITHUB_TOKEN"
 EOF
   chmod +x /usr/local/bin/git-credential-vaultwarden
   git config --global credential.https://github.com.helper vaultwarden
-  log "Authenticating gh CLI..."
-  echo "$GITHUB_TOKEN" | gh auth login --with-token 2>/dev/null || warn "gh auth login failed."
-  log "git and gh CLI configured."
+  log "git configured. gh CLI will use GITHUB_TOKEN env var automatically."
 else
   warn "GitHub token not found in vault. git push and gh will not be authenticated."
 fi
