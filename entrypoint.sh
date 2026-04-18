@@ -80,6 +80,7 @@ GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/nul
 
 if [ -n "$GITHUB_TOKEN" ]; then
   export GITHUB_TOKEN
+  export GH_TOKEN="$GITHUB_TOKEN"
   log "GitHub token fetched, configuring git credential helper..."
   cat > /usr/local/bin/git-credential-vaultwarden <<EOF
 #!/bin/sh
