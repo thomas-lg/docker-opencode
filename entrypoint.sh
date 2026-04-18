@@ -79,12 +79,12 @@ log "Fetching GitHub token from Vaultwarden..."
 GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/null || true)
 
 if [ -n "$GITHUB_TOKEN" ]; then
-  export GITHUB_TOKEN
-  export GH_TOKEN="$GITHUB_TOKEN"
-  # Write to /etc/environment so docker exec shells inherit the tokens
-  echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> /etc/environment
-  echo "GH_TOKEN=$GITHUB_TOKEN" >> /etc/environment
-  log "GitHub token fetched, configuring git credential helper..."
+  log "GitHub token fetched, configuring git and gh CLI..."
+  # Store token persistently for gh — works in all docker exec shells without env vars
+  echo "$GITHUB_TOKEN" | gh auth login --with-token 2>/dev/null \
+    && log "gh CLI authenticated." \
+    || warn "gh auth login failed."
+  # Configure git credential helper
   cat > /usr/local/bin/git-credential-vaultwarden <<EOF
 #!/bin/sh
 echo "username=x-token"
@@ -92,7 +92,7 @@ echo "password=$GITHUB_TOKEN"
 EOF
   chmod +x /usr/local/bin/git-credential-vaultwarden
   git config --global credential.https://github.com.helper vaultwarden
-  log "git configured. gh CLI will use GITHUB_TOKEN env var automatically."
+  log "git configured."
 else
   warn "GitHub token not found in vault. git push and gh will not be authenticated."
 fi
