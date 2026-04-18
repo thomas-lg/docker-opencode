@@ -81,6 +81,9 @@ GITHUB_TOKEN=$(bw get password "GitHub Token" --session "$BW_SESSION" 2>/dev/nul
 if [ -n "$GITHUB_TOKEN" ]; then
   export GITHUB_TOKEN
   export GH_TOKEN="$GITHUB_TOKEN"
+  # Write to /etc/environment so docker exec shells inherit the tokens
+  echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> /etc/environment
+  echo "GH_TOKEN=$GITHUB_TOKEN" >> /etc/environment
   log "GitHub token fetched, configuring git credential helper..."
   cat > /usr/local/bin/git-credential-vaultwarden <<EOF
 #!/bin/sh
