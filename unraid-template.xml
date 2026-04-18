@@ -3,7 +3,7 @@
   <Name>open-code</Name>
   <Repository>ghcr.io/thomas-lg/docker-opencode:latest</Repository>
   <Registry>https://github.com/thomas-lg/docker-opencode/pkgs/container/docker-opencode</Registry>
-  <Network>nostromo</Network>
+  <Network>bridge</Network>
   <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
@@ -25,11 +25,7 @@
   <Config Name="Web GUI" Target="4096" Default="4096" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">4096</Config>
   <Config Name="Configuration" Target="/root/.config/opencode" Default="/mnt/user/appdata/opencode/config" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/opencode/config</Config>
   <Config Name="Sessions &amp;amp; logs" Target="/root/.local/share/opencode" Default="/mnt/user/appdata/opencode/data" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/opencode/data</Config>
-  <Config Name="State" Target="/root/.local/state/opencode" Default="/mnt/user/appdata/opencode/state" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/opencode/state</Config>
-  <Config Name="workspace" Target="/root/workspace" Default="/mnt/user/workspace/" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/workspace/</Config>
-  <Config Name="appdata" Target="/root/appdata" Default="/mnt/user/appdata/" Mode="ro" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/</Config>
-  <Config Name="system logs" Target="/root/system" Default="/var/log/" Mode="ro" Description="" Type="Path" Display="always" Required="false" Mask="false">/var/log/</Config>
-  <Config Name="Obsidian Vault" Target="/root/obsidian_vault" Default="/mnt/user/obsidian/vault/" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/obsidian/vault/</Config>
+  <Config Name="State" Target="/root/.local/state/opencode" Default="/mnt/user/appdata/opencode/state" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/opencode/state  </Config>
   <Config Name="Docker Socket Proxy" Target="DOCKER_HOST" Default="dockersocket" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">dockersocket</Config>
   <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">99</Config>
   <Config Name="GUID" Target="GUID" Default="100" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">100</Config>
