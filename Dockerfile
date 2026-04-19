@@ -1,7 +1,7 @@
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH="/root/.opencode/bin:${PATH}"
+ENV PATH="/root/.opencode/bin:/root/.local/bin:${PATH}"
 
 # Base packages (Tier 1 + Tier 2)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -52,6 +52,9 @@ RUN BW_VERSION=$(curl -fsSL "https://api.github.com/repos/bitwarden/clients/rele
 
 # OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash
+
+# uv (Python/package manager)
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
