@@ -159,4 +159,4 @@ If any vault step fails, the container falls back and starts OpenCode without Gi
 
 ## License
 
-See [LICENSE](./LICENSE) if present, or check the upstream [OpenCode license](https://opencode.ai).
+This project is licensed under the [MIT License](./LICENSE).
