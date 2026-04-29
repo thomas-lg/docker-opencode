@@ -39,10 +39,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && rm -rf /var/lib/apt/lists/*
 
 # Bitwarden CLI — latest release from bitwarden/clients (tag cli-v*)
-ARG GITHUB_TOKEN
-RUN BW_VERSION=$(curl -fsSL \
-      ${GITHUB_TOKEN:+-H "Authorization: Bearer ${GITHUB_TOKEN}"} \
-      "https://api.github.com/repos/bitwarden/clients/releases" \
+RUN BW_VERSION=$(curl -fsSL "https://api.github.com/repos/bitwarden/clients/releases" \
       | grep '"tag_name"' \
       | grep '"cli-v' \
       | head -1 \
